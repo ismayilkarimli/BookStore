@@ -47,4 +47,5 @@ public class BookMapperTest {
         assertThat(book.getReleaseDate()).isEqualTo(new Date(1L));
         assertThat(book.getAuthors()).isNotNull();
     }
+
 }
