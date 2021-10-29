@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.sql.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +25,6 @@ public class BookDto {
     private Integer pageCount;
 
     @NotBlank(message = "a book must have an author")
-    private Author author;
+    private Set<Author> authors;
 
 }

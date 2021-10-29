@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +20,6 @@ public class AuthorDto {
     @NotBlank(message = "author last name cannot be blank")
     private String lastName;
 
-    private List<Book> books;
+    private Set<Book> books;
 
 }
