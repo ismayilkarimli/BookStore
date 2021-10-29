@@ -8,23 +8,13 @@ import javax.validation.constraints.Positive;
 import java.sql.Date;
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
-public class BookDto {
-
-    @NotBlank(message = "book name cannot be blank")
-    private String name;
-
-    private Date releaseDate;
-
-    @NotBlank(message = "page count cannot be blank")
-    @Positive(message = "page count must be positive")
-    private Integer pageCount;
-
-    @NotBlank(message = "a book must have an author")
-    private Set<Author> authors;
+public record BookDto(@NotBlank(message = "book name cannot be blank") String name,
+                      Date releaseDate,
+                      @NotBlank(message = "page count cannot be blank") @Positive(message = "page count must be positive") Integer pageCount,
+                      @NotBlank(message = "a book must have an author") Set<Author> authors) {
 
 }
