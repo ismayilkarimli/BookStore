@@ -1,7 +1,6 @@
 package com.api.bookstore.model.dto;
 
 import com.api.bookstore.model.bean.Author;
-import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;

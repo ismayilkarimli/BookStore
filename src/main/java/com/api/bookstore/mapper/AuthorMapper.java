@@ -1,4 +1,18 @@
 package com.api.bookstore.mapper;
 
-public class AuthorAuthorDtoMapper {
+import com.api.bookstore.model.bean.Author;
+import com.api.bookstore.model.dto.AuthorDto;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface AuthorMapper {
+
+    AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
+
+    AuthorDto authorToAuthorDto(Author author);
+
+    Author authorDtoToAuthor(AuthorDto dto);
+
 }
