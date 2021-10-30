@@ -27,7 +27,7 @@ public class BookControllerImpl {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> searchBookById(@PathVariable UUID id) {
+    public ResponseEntity<BookDto> searchBookById(@PathVariable Long id) {
         BookDto bookDto = bookService.searchBookById(id);
         return ResponseEntity.status(HttpStatus.OK).body(bookDto);
     }
@@ -39,14 +39,14 @@ public class BookControllerImpl {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDto> updateBook(@PathVariable("id") UUID bookId,
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
                                                  @Valid @RequestBody BookDto bookDto) {
         BookDto updatedBook = bookService.updateBook(bookId, bookDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(updatedBook);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteBook(@PathVariable UUID id) {
+    public ResponseEntity<HttpStatus> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

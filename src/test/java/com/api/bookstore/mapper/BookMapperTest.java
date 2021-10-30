@@ -15,7 +15,7 @@ public class BookMapperTest {
     public void shouldMapBookToDto() {
         // given
         Book book = new Book();
-        book.setName("Pragmatic Programmer");
+        book.setTitle("Pragmatic Programmer");
         book.setPageCount(320);
         book.setReleaseDate(new Date(1L));
         book.setAuthors(Collections.emptySet());
@@ -25,7 +25,7 @@ public class BookMapperTest {
 
         // then
         assertThat(bookDto).isNotNull();
-        assertThat(bookDto.name()).isEqualTo("Pragmatic Programmer");
+        assertThat(bookDto.title()).isEqualTo("Pragmatic Programmer");
         assertThat(bookDto.pageCount()).isEqualTo(320);
         assertThat(bookDto.releaseDate()).isEqualTo(new Date(1L));
         assertThat(bookDto.authors()).isNotNull();
@@ -42,7 +42,7 @@ public class BookMapperTest {
 
         // then
         assertThat(book).isNotNull();
-        assertThat(book.getName()).isEqualTo("Pragmatic Programmer");
+        assertThat(book.getTitle()).isEqualTo("Pragmatic Programmer");
         assertThat(book.getPageCount()).isEqualTo(320);
         assertThat(book.getReleaseDate()).isEqualTo(new Date(1L));
         assertThat(book.getAuthors()).isNotNull();

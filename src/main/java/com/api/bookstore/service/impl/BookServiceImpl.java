@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto searchBookById(UUID bookId) {
+    public BookDto searchBookById(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("no such book"));
         BookDto dto = BookMapper.INSTANCE.bookToBookDto(book);
@@ -38,10 +38,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBook(UUID bookId, BookDto dto) {
+    public BookDto updateBook(Long bookId, BookDto dto) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("no such book"));
-        book.setName(dto.name());
+        book.setTitle(dto.title());
         book.setPageCount(dto.pageCount());
         book.setReleaseDate(dto.releaseDate());
         Book savedBook = bookRepository.save(book);
@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(UUID id) {
+    public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }
 }

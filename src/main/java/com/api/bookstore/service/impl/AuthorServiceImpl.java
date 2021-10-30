@@ -26,7 +26,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto searchAuthorById(UUID authorId) {
+    public AuthorDto searchAuthorById(Long authorId) {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("no such author"));
         AuthorDto authorDto = AuthorMapper.INSTANCE.authorToAuthorDto(author);
@@ -40,7 +40,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto updateAuthor(UUID authorId, AuthorDto dto) {
+    public AuthorDto updateAuthor(Long authorId, AuthorDto dto) {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("no such author"));
         author.setName(dto.name());
@@ -53,7 +53,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(UUID id) {
+    public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
     }
 }

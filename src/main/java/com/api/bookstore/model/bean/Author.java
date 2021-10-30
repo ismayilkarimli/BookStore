@@ -20,7 +20,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private UUID authorId;
+    private Long authorId;
 
     @Column(nullable = false)
     private String name;

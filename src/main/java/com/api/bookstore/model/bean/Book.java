@@ -24,10 +24,10 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @Setter(AccessLevel.NONE)
-    private UUID bookId;
+    private Long bookId;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column(name = "released_date", nullable = false)
     @CreatedDate

@@ -5,8 +5,8 @@ import com.api.bookstore.model.bean.Book;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-public record AuthorDto(@NotBlank(message = "author name cannot be blank") String name,
-                        @NotBlank(message = "author last name cannot be blank") String lastName,
+public record AuthorDto(@NotBlank(message = "author title cannot be blank") String name,
+                        @NotBlank(message = "author last title cannot be blank") String lastName,
                         Set<Book> books) {
 
 }

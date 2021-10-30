@@ -9,12 +9,12 @@ public interface BookService {
 
     void addBook(BookDto bookDto);
 
-    BookDto searchBookById(UUID bookId);
+    BookDto searchBookById(Long bookId);
 
     List<BookDto> searchBooksByTitle(String title);
 
-    BookDto updateBook(UUID bookId, BookDto bookDto);
+    BookDto updateBook(Long bookId, BookDto bookDto);
 
-    void deleteBook(UUID id);
+    void deleteBook(Long id);
 
 }

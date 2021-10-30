@@ -27,7 +27,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDto> searchAuthorById(@PathVariable("id") UUID authorId) {
+    public ResponseEntity<AuthorDto> searchAuthorById(@PathVariable("id") Long authorId) {
         AuthorDto authorDto = authorService.searchAuthorById(authorId);
         return ResponseEntity.status(HttpStatus.OK).body(authorDto);
     }
@@ -39,14 +39,14 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") UUID authorId,
+    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") Long authorId,
                                                   @Valid @RequestBody AuthorDto authorDto) {
         AuthorDto updatedAuthor = authorService.updateAuthor(authorId, authorDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(updatedAuthor);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable("id") UUID authorId) {
+    public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable("id") Long authorId) {
         authorService.deleteAuthor(authorId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

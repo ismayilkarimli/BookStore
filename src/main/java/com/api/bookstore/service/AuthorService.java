@@ -10,12 +10,12 @@ public interface AuthorService {
 
     void addAuthor(AuthorDto authorDto);
 
-    AuthorDto searchAuthorById(UUID authorId);
+    AuthorDto searchAuthorById(Long authorId);
 
     List<AuthorDto> searchAuthorsByName(String name);
 
-    AuthorDto updateAuthor(UUID authorId, AuthorDto authorDto);
+    AuthorDto updateAuthor(Long authorId, AuthorDto authorDto);
 
-    void deleteAuthor(UUID id);
+    void deleteAuthor(Long id);
 
 }
