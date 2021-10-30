@@ -40,5 +40,5 @@ public class AuthorMapperTest {
         assertThat(author.getLastName()).isEqualTo("Twain");
         assertThat(author.getBooks()).isNotNull();
     }
-    
+
 }
