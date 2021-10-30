@@ -30,7 +30,7 @@ public class BookControllerImpl {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> searchBooksByName(@RequestParam String name) {
+    public ResponseEntity<Object> searchBooksByTitle(@RequestParam String title) {
         return ResponseEntity.status(HttpStatus.OK).body(null); // body will contain book(s)
     }
 
