@@ -13,7 +13,7 @@ public interface BookService {
 
     List<BookDto> searchBooksByTitle(String title);
 
-    BookDto updateBook(UUID bookId);
+    BookDto updateBook(UUID bookId, BookDto bookDto);
 
     void deleteBook(UUID id);
 

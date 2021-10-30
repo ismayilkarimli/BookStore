@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,27 +22,32 @@ public class BookControllerImpl {
 
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> addBook(@Valid @RequestBody BookDto bookDto) {
+        bookService.addBook(bookDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> searchBookById(@PathVariable UUID id) {
-        return ResponseEntity.status(HttpStatus.OK).body(null); // body will contain book
+    public ResponseEntity<BookDto> searchBookById(@PathVariable UUID id) {
+        BookDto bookDto = bookService.searchBookById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(bookDto);
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> searchBooksByTitle(@RequestParam String title) {
-        return ResponseEntity.status(HttpStatus.OK).body(null); // body will contain book(s)
+    public ResponseEntity<List<BookDto>> searchBooksByTitle(@RequestParam String title) {
+        List<BookDto> bookDtos = bookService.searchBooksByTitle(title);
+        return ResponseEntity.status(HttpStatus.OK).body(bookDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updateBook(@PathVariable("id") UUID bookId,
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") UUID bookId,
                                                  @Valid @RequestBody BookDto bookDto) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // body will contain updated book
+        BookDto updatedBook = bookService.updateBook(bookId, bookDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(updatedBook);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable UUID id) {
+        bookService.deleteBook(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

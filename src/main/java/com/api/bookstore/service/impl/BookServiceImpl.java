@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBook(UUID bookId) {
+    public BookDto updateBook(UUID bookId, BookDto dto) {
         return null;
     }
 

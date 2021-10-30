@@ -31,7 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto updateAuthor(UUID authorId) {
+    public AuthorDto updateAuthor(UUID authorId, AuthorDto dto) {
         return null;
     }
 
