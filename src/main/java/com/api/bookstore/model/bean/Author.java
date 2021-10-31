@@ -1,6 +1,7 @@
 package com.api.bookstore.model.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @Setter(AccessLevel.NONE)
     private Long authorId;
 
     @Column(nullable = false)
