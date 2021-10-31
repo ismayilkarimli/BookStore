@@ -1,19 +1,17 @@
 package com.api.bookstore.model.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Author {
@@ -35,7 +33,20 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "book_id", nullable = false)
     )
-    @JsonIgnore
+    @JsonIgnoreProperties({ "authors", "createdAt", "updatedAt" })
+    @ToString.Exclude
     private Set<Book> books;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Author author = (Author) o;
+        return authorId != null && Objects.equals(authorId, author.authorId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

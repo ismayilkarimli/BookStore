@@ -1,25 +1,22 @@
 package com.api.bookstore.model.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
@@ -40,15 +37,30 @@ public class Book {
     private Integer pageCount;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "books")
-    @JsonIgnore
+    @JsonIgnoreProperties({ "books" })
+    @ToString.Exclude
     private Set<Author> authors;
 
     @Column(nullable = false)
     @CreationTimestamp
+    @JsonIgnore
     private Date createdAt;
 
     @Column(nullable = false)
     @UpdateTimestamp
+    @JsonIgnore
     private Date updatedAt;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Book book = (Book) o;
+        return bookId != null && Objects.equals(bookId, book.bookId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
