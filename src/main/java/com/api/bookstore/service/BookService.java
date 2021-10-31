@@ -3,11 +3,10 @@ package com.api.bookstore.service;
 import com.api.bookstore.model.dto.BookDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface BookService {
 
-    void addBook(BookDto bookDto);
+    Long addBook(BookDto bookDto);
 
     BookDto searchBookById(Long bookId);
 

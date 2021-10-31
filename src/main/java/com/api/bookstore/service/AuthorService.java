@@ -1,14 +1,12 @@
 package com.api.bookstore.service;
 
-import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.dto.AuthorDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface AuthorService {
 
-    void addAuthor(AuthorDto authorDto);
+    Long addAuthor(AuthorDto authorDto);
 
     AuthorDto searchAuthorById(Long authorId);
 

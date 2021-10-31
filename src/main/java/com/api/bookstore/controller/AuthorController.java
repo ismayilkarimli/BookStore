@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 public interface AuthorController {
 
-    ResponseEntity<HttpStatus> addAuthor(AuthorDto authorDto);
+    ResponseEntity<Map<String, Long>> addAuthor(AuthorDto authorDto);
 
     ResponseEntity<AuthorDto> searchAuthorById(Long authorId);
 

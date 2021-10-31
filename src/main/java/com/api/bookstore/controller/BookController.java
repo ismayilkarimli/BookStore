@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 public interface BookController {
 
-    ResponseEntity<HttpStatus> addBook(BookDto bookDto);
+    ResponseEntity<Map<String, Long>> addBook(BookDto bookDto);
 
     ResponseEntity<BookDto> searchBookById(Long id);
 
