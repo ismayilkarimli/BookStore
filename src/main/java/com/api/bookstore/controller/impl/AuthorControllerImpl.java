@@ -24,7 +24,7 @@ public class AuthorControllerImpl implements AuthorController {
 
     private final AuthorService authorService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @Override
     public ResponseEntity<Map<String, Long>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         log.info("request for adding author {}", authorDto);
@@ -40,7 +40,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.ok(allAuthors);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     @Override
     public ResponseEntity<Page<AuthorDto>> getPaginatedAuthors(@RequestParam Integer page) {
         log.info("request to get authors in paginated style (page {})", page);

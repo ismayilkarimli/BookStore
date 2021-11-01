@@ -23,7 +23,7 @@ public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @Override
     public ResponseEntity<Map<String, Long>> addBook(@Valid @RequestBody BookDto bookDto) {
         log.info("request for adding book {}", bookDto);
@@ -38,7 +38,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     @Override
     public ResponseEntity<Page<BookDto>> getPaginatedBooks(@RequestParam Integer page) {
         log.info("request to get books in paginated style (page {})", page);
