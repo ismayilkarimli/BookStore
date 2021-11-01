@@ -1,5 +1,6 @@
 package com.api.bookstore.service.impl;
 
+import com.api.bookstore.mapper.AuthorMapper;
 import com.api.bookstore.mapper.BookMapper;
 import com.api.bookstore.model.bean.Book;
 import com.api.bookstore.model.dto.BookDto;
@@ -7,9 +8,12 @@ import com.api.bookstore.repository.BookRepository;
 import com.api.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        log.info("all books: {}", books);
+        List<BookDto> bookDtos = books.stream()
+                .map(BookMapper.INSTANCE::bookToBookDto)
+                .collect(Collectors.toList());
+
+        return bookDtos;
+    }
+
+    @Override
     public BookDto searchBookById(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> {
@@ -42,7 +57,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> searchBooksByTitle(String title) {
-        return null;
+        List<Book> books = bookRepository.findBooksByTitleIgnoreCase(title);
+        log.info("books with {} in the title: {}", title, books);
+        List<BookDto> bookDtos = books.stream()
+                .map(BookMapper.INSTANCE::bookToBookDto)
+                .collect(Collectors.toList());
+
+        return bookDtos;
+    }
+
+    @Override
+    public Page<BookDto> getPaginatedBooks(Integer page) {
+        final int pageSize = 5;
+        Page<Book> all = bookRepository.findAll(PageRequest.of(page, pageSize));
+        Page<BookDto> bookDtoPage = all.map(BookMapper.INSTANCE::bookToBookDto);
+        return bookDtoPage;
     }
 
     @Override

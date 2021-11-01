@@ -1,15 +1,23 @@
 package com.api.bookstore.service.impl;
 
 import com.api.bookstore.mapper.AuthorMapper;
+import com.api.bookstore.mapper.BookMapper;
+import com.api.bookstore.mapper.BookMapperImpl;
 import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.dto.AuthorDto;
 import com.api.bookstore.repository.AuthorRepository;
 import com.api.bookstore.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +33,17 @@ public class AuthorServiceImpl implements AuthorService {
         log.info("author: {}", saved);
 
         return saved.getAuthorId();
+    }
+
+    @Override
+    public List<AuthorDto> getAllAuthors() {
+        List<Author> authors = authorRepository.findAll();
+        log.info("all authors: {}", authors);
+        List<AuthorDto> authorDtos = authors.stream()
+                .map(AuthorMapper.INSTANCE::authorToAuthorDto)
+                .collect(Collectors.toList());
+
+        return authorDtos;
     }
 
     @Override
@@ -44,7 +63,22 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<AuthorDto> searchAuthorsByName(String name) {
         log.info("searching for authors with name {}", name);
-        return null;
+        List<Author> authors = authorRepository.findAuthorsByNameIgnoreCaseOrderByName(name);
+        List<AuthorDto> authorDtos = authors.stream()
+                .map(AuthorMapper.INSTANCE::authorToAuthorDto)
+                .collect(Collectors.toList());
+
+        return authorDtos;
+    }
+
+    @Override
+    public Page<AuthorDto> getPaginatedAuthors(Integer page) {
+        log.info("fetching page {}", page);
+        final int pageSize = 5;
+        Page<Author> all = authorRepository.findAll(PageRequest.of(page, pageSize));
+        Page<AuthorDto> authorDtoPage = all.map(AuthorMapper.INSTANCE::authorToAuthorDto);
+        log.info("page content {}", authorDtoPage.getContent());
+        return authorDtoPage;
     }
 
     @Override

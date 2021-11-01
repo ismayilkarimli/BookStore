@@ -2,6 +2,7 @@ package com.api.bookstore.model.dto;
 
 import com.api.bookstore.model.bean.Author;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.*;
@@ -20,6 +21,6 @@ public record BookDto(
         @Positive(message = "page count must be positive")
         Integer pageCount,
 
-        @Min(value = 1)
+        @JsonIgnoreProperties({ "books" })
         Set<Author> authors
 ) { }

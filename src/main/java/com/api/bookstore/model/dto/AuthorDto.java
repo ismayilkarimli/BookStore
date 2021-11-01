@@ -1,18 +1,20 @@
 package com.api.bookstore.model.dto;
 
 import com.api.bookstore.model.bean.Book;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 public record AuthorDto(
-        @NotBlank(message = "author title cannot be blank")
+        @NotBlank(message = "author name cannot be blank")
         String name,
 
         @JsonProperty("lastname")
-        @NotBlank(message = "author last title cannot be blank")
+        @NotBlank(message = "author last name cannot be blank")
         String lastName,
 
+        @JsonIgnoreProperties({ "authors" })
         Set<Book> books
 ) { }

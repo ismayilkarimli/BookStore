@@ -37,7 +37,6 @@ public class Book {
     private Integer pageCount;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "books")
-    @JsonIgnoreProperties({ "books" })
     @ToString.Exclude
     private Set<Author> authors;
 
