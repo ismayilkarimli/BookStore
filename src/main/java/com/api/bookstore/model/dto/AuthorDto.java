@@ -15,6 +15,6 @@ public record AuthorDto(
         @NotBlank(message = "author last name cannot be blank")
         String lastName,
 
-        @JsonIgnoreProperties({ "authors" })
+        @JsonIgnoreProperties({ "authors", "createdAt", "updatedAt" })
         Set<Book> books
 ) { }

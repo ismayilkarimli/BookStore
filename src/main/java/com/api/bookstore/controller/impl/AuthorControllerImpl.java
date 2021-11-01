@@ -36,14 +36,16 @@ public class AuthorControllerImpl implements AuthorController {
     @Override
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
         log.info("request to get all authors");
-        return ResponseEntity.ok(authorService.getAllAuthors());
+        List<AuthorDto> allAuthors = authorService.getAllAuthors();
+        return ResponseEntity.ok(allAuthors);
     }
 
     @GetMapping("/")
     @Override
     public ResponseEntity<Page<AuthorDto>> getPaginatedAuthors(@RequestParam Integer page) {
         log.info("request to get authors in paginated style (page {})", page);
-        return ResponseEntity.ok(authorService.getPaginatedAuthors(page));
+        Page<AuthorDto> paginatedAuthors = authorService.getPaginatedAuthors(page);
+        return ResponseEntity.ok(paginatedAuthors);
     }
 
     @GetMapping("/{id}")

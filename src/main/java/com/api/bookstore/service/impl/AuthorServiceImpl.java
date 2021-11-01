@@ -78,6 +78,7 @@ public class AuthorServiceImpl implements AuthorService {
         Page<Author> all = authorRepository.findAll(PageRequest.of(page, pageSize));
         Page<AuthorDto> authorDtoPage = all.map(AuthorMapper.INSTANCE::authorToAuthorDto);
         log.info("page content {}", authorDtoPage.getContent());
+
         return authorDtoPage;
     }
 

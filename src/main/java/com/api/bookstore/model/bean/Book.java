@@ -42,12 +42,10 @@ public class Book {
 
     @Column(nullable = false)
     @CreationTimestamp
-    @JsonIgnore
     private Date createdAt;
 
     @Column(nullable = false)
     @UpdateTimestamp
-    @JsonIgnore
     private Date updatedAt;
 
     @Override
