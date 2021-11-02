@@ -117,6 +117,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         log.info("deleting book with id {}", id);
+        bookRepository.findById(id).orElseThrow(() -> {
+            log.error("Could not delete. No book with id {}", id);
+            throw new RuntimeException("no such book");
+        });
         bookRepository.deleteById(id);
     }
 }
