@@ -16,5 +16,6 @@ public record AuthorDto(
         String lastName,
 
         @JsonIgnoreProperties({ "authors", "createdAt", "updatedAt" })
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Set<Book> books
 ) { }

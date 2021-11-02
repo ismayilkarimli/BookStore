@@ -22,5 +22,6 @@ public record BookDto(
         Integer pageCount,
 
         @JsonIgnoreProperties({ "books" })
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Set<Author> authors
 ) { }
