@@ -1,15 +1,23 @@
 package com.api.bookstore.service.impl;
 
 import com.api.bookstore.mapper.BookMapper;
+import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.bean.Book;
 import com.api.bookstore.model.dto.BookDto;
+import com.api.bookstore.repository.AuthorRepository;
 import com.api.bookstore.repository.BookRepository;
 import com.api.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,14 +25,34 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
+    @Transactional
     @Override
     public Long addBook(BookDto bookDto) {
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);
+        List<Author> authors = new ArrayList<>();
+        if (bookDto.authorIds() != null) {
+            authors = authorRepository.findAllById(bookDto.authorIds());
+            authors.forEach(author -> author.getBooks().add(book));
+            book.setAuthors(new HashSet<>(authors));
+        }
         Book saved = bookRepository.save(book);
+        authorRepository.saveAll(authors);
         log.info("saved book {}", saved);
 
         return saved.getBookId();
+    }
+
+    @Override
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        log.info("all books: {}", books);
+        List<BookDto> bookDtos = books.stream()
+                .map(BookMapper.INSTANCE::bookToBookDto)
+                .collect(Collectors.toList());
+
+        return bookDtos;
     }
 
     @Override
@@ -42,9 +70,24 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> searchBooksByTitle(String title) {
-        return null;
+        List<Book> books = bookRepository.findBooksByTitleIgnoreCase(title);
+        log.info("books with {} in the title: {}", title, books);
+        List<BookDto> bookDtos = books.stream()
+                .map(BookMapper.INSTANCE::bookToBookDto)
+                .collect(Collectors.toList());
+
+        return bookDtos;
     }
 
+    @Override
+    public Page<BookDto> getPaginatedBooks(Integer page) {
+        final int pageSize = 5;
+        Page<Book> all = bookRepository.findAll(PageRequest.of(page, pageSize));
+        Page<BookDto> bookDtoPage = all.map(BookMapper.INSTANCE::bookToBookDto);
+        return bookDtoPage;
+    }
+
+    @Transactional
     @Override
     public BookDto updateBook(Long bookId, BookDto dto) {
         log.info("updating book with id {} and value {}", bookId, dto);
@@ -53,14 +96,20 @@ public class BookServiceImpl implements BookService {
                     log.error("no book with id {}", bookId);
                     throw new RuntimeException("no such book");
                 });
+        List<Author> authors = new ArrayList<>(book.getAuthors());
+        if (dto.authorIds() != null) {
+            authors.forEach(author -> author.getBooks().remove(book));
+            authors = authorRepository.findAllById(dto.authorIds());
+            authors.forEach(author -> author.getBooks().add(book));
+            book.setAuthors(new HashSet<>(authors));
+        }
         book.setTitle(dto.title());
-        book.setAuthors(dto.authors());
         book.setPageCount(dto.pageCount());
         book.setReleaseDate(dto.releaseDate());
-
         Book savedBook = bookRepository.save(book);
-        BookDto bookDto = BookMapper.INSTANCE.bookToBookDto(savedBook);
         log.info("updated book {}", savedBook);
+        authorRepository.saveAll(authors);
+        BookDto bookDto = BookMapper.INSTANCE.bookToBookDto(savedBook);
 
         return bookDto;
     }
@@ -68,6 +117,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         log.info("deleting book with id {}", id);
+        bookRepository.findById(id).orElseThrow(() -> {
+            log.error("Could not delete. No book with id {}", id);
+            throw new RuntimeException("no such book");
+        });
         bookRepository.deleteById(id);
     }
 }

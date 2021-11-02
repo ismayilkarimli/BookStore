@@ -1,6 +1,5 @@
 package com.api.bookstore.model.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -33,7 +32,6 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "book_id", nullable = false)
     )
-    @JsonIgnoreProperties({ "authors", "createdAt", "updatedAt" })
     @ToString.Exclude
     private Set<Book> books;
 
@@ -49,4 +47,5 @@ public class Author {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

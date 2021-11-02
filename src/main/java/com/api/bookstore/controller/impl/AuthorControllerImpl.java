@@ -6,8 +6,8 @@ import com.api.bookstore.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,21 +24,40 @@ public class AuthorControllerImpl implements AuthorController {
 
     private final AuthorService authorService;
 
-    @PostMapping("/")
+    @PostMapping("")
+    @Override
     public ResponseEntity<Map<String, Long>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         log.info("request for adding author {}", authorDto);
         Long id = authorService.addAuthor(authorDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("id", id));
     }
 
+    @GetMapping("/all")
+    @Override
+    public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+        log.info("request to get all authors");
+        List<AuthorDto> allAuthors = authorService.getAllAuthors();
+        return ResponseEntity.ok(allAuthors);
+    }
+
+    @GetMapping("")
+    @Override
+    public ResponseEntity<Page<AuthorDto>> getPaginatedAuthors(@RequestParam Integer page) {
+        log.info("request to get authors in paginated style (page {})", page);
+        Page<AuthorDto> paginatedAuthors = authorService.getPaginatedAuthors(page);
+        return ResponseEntity.ok(paginatedAuthors);
+    }
+
     @GetMapping("/{id}")
+    @Override
     public ResponseEntity<AuthorDto> searchAuthorById(@PathVariable("id") Long authorId) {
         log.info("request to search author with id {}", authorId);
         AuthorDto authorDto = authorService.searchAuthorById(authorId);
         return ResponseEntity.status(HttpStatus.OK).body(authorDto);
     }
 
-    @GetMapping("/")
+    @GetMapping("/search")
+    @Override
     public ResponseEntity<List<AuthorDto>> searchAuthorsByName(@RequestParam("name") String name) {
         log.info("request to search author with name {}", name);
         List<AuthorDto> authorDtos = authorService.searchAuthorsByName(name);
@@ -46,6 +65,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @PutMapping(value = "/{id}")
+    @Override
     public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") Long authorId,
                                                   @Valid @RequestBody AuthorDto authorDto) {
         log.info("put request for updating author with id {}", authorId);
@@ -54,6 +74,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable("id") Long authorId) {
         log.info("request to delete author with id {}", authorId);
         authorService.deleteAuthor(authorId);
