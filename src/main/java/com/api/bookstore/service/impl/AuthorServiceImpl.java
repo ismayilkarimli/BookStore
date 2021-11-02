@@ -2,8 +2,10 @@ package com.api.bookstore.service.impl;
 
 import com.api.bookstore.mapper.AuthorMapper;
 import com.api.bookstore.model.bean.Author;
+import com.api.bookstore.model.bean.Book;
 import com.api.bookstore.model.dto.AuthorDto;
 import com.api.bookstore.repository.AuthorRepository;
+import com.api.bookstore.repository.BookRepository;
 import com.api.bookstore.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +23,18 @@ import java.util.stream.Collectors;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
+
+    // TODO: Exceptions for cases when book or author id is wrong
 
     @Override
     public Long addAuthor(AuthorDto authorDto) {
         Author author = AuthorMapper.INSTANCE.authorDtoToAuthor(authorDto);
+        List<Book> books = bookRepository.findAllById(authorDto.bookIds());
+        author.setBooks(new HashSet<>(books));
+        books.forEach(book -> book.getAuthors().add(author));
         Author saved = authorRepository.save(author);
+        bookRepository.saveAll(books);
         log.info("author: {}", saved);
 
         return saved.getAuthorId();

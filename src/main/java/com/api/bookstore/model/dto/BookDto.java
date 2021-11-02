@@ -26,6 +26,6 @@ public record BookDto(
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Set<Author> authors,
 
-        @JsonProperty(required = true, access = JsonProperty.Access.WRITE_ONLY)
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         List<Long> authorIds
 ) { }
