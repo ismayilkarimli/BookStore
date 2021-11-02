@@ -30,12 +30,15 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Long addAuthor(AuthorDto authorDto) {
         Author author = AuthorMapper.INSTANCE.authorDtoToAuthor(authorDto);
-        List<Book> books = bookRepository.findAllById(authorDto.bookIds());
-        author.setBooks(new HashSet<>(books));
-        books.forEach(book -> book.getAuthors().add(author));
+        List<Book> books = List.of();
+        if (authorDto.bookIds() != null) {
+            books = bookRepository.findAllById(authorDto.bookIds());
+            author.setBooks(new HashSet<>(books));
+            books.forEach(book -> book.getAuthors().add(author));
+        }
         Author saved = authorRepository.save(author);
         bookRepository.saveAll(books);
-        log.info("author: {}", saved);
+        log.info("saved author: {}", saved);
 
         return saved.getAuthorId();
     }

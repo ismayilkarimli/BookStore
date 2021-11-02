@@ -30,9 +30,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public Long addBook(BookDto bookDto) {
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);
-        List<Author> authors = authorRepository.findAllById(bookDto.authorIds());
-        authors.forEach(author -> author.getBooks().add(book));
-        book.setAuthors(new HashSet<>(authors));
+        List<Author> authors = List.of();
+        if (bookDto.authorIds() != null) {
+            authors = authorRepository.findAllById(bookDto.authorIds());
+            authors.forEach(author -> author.getBooks().add(book));
+            book.setAuthors(new HashSet<>(authors));
+        }
         Book saved = bookRepository.save(book);
         authorRepository.saveAll(authors);
         log.info("saved book {}", saved);
