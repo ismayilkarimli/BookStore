@@ -1,8 +1,6 @@
 package com.api.bookstore.service.impl;
 
 import com.api.bookstore.mapper.AuthorMapper;
-import com.api.bookstore.mapper.BookMapper;
-import com.api.bookstore.mapper.BookMapperImpl;
 import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.dto.AuthorDto;
 import com.api.bookstore.repository.AuthorRepository;
@@ -11,13 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

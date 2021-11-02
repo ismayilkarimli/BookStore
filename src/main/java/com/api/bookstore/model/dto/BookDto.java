@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public record BookDto(
@@ -23,5 +24,8 @@ public record BookDto(
 
         @JsonIgnoreProperties({ "books" })
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        Set<Author> authors
+        Set<Author> authors,
+
+        @JsonProperty(required = true, access = JsonProperty.Access.WRITE_ONLY)
+        List<Long> authorIds
 ) { }

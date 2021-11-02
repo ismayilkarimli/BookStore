@@ -1,6 +1,5 @@
 package com.api.bookstore.model.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -48,4 +47,5 @@ public class Author {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

@@ -1,9 +1,10 @@
 package com.api.bookstore.service.impl;
 
-import com.api.bookstore.mapper.AuthorMapper;
 import com.api.bookstore.mapper.BookMapper;
+import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.bean.Book;
 import com.api.bookstore.model.dto.BookDto;
+import com.api.bookstore.repository.AuthorRepository;
 import com.api.bookstore.repository.BookRepository;
 import com.api.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,11 +24,17 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
+    @Transactional
     @Override
     public Long addBook(BookDto bookDto) {
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);
+        List<Author> authors = authorRepository.findAllById(bookDto.authorIds());
+        authors.forEach(author -> author.getBooks().add(book));
+        book.setAuthors(new HashSet<>(authors));
         Book saved = bookRepository.save(book);
+        authorRepository.saveAll(authors);
         log.info("saved book {}", saved);
 
         return saved.getBookId();

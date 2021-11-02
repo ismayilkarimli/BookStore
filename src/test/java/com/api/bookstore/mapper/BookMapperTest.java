@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,7 +43,7 @@ public class BookMapperTest {
         LocalDate date = LocalDate.parse("01-10-1999", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         // given
-        BookDto bookDto = new BookDto("Pragmatic Programmer", date, 320, Collections.emptySet());
+        BookDto bookDto = new BookDto("Pragmatic Programmer", date, 320, Collections.emptySet(), List.of(1L));
 
         // when
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);

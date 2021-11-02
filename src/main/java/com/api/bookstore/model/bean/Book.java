@@ -1,10 +1,10 @@
 package com.api.bookstore.model.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -37,6 +37,7 @@ public class Book {
     private Integer pageCount;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "books")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
     private Set<Author> authors;
 
@@ -60,4 +61,5 @@ public class Book {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
