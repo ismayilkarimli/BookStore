@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Long addBook(BookDto bookDto) {
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);
-        List<Author> authors = List.of();
+        List<Author> authors = new ArrayList<>();
         if (bookDto.authorIds() != null) {
             authors = authorRepository.findAllById(bookDto.authorIds());
             authors.forEach(author -> author.getBooks().add(book));
@@ -86,6 +87,7 @@ public class BookServiceImpl implements BookService {
         return bookDtoPage;
     }
 
+    @Transactional
     @Override
     public BookDto updateBook(Long bookId, BookDto dto) {
         log.info("updating book with id {} and value {}", bookId, dto);
@@ -94,14 +96,20 @@ public class BookServiceImpl implements BookService {
                     log.error("no book with id {}", bookId);
                     throw new RuntimeException("no such book");
                 });
+        List<Author> authors = new ArrayList<>(book.getAuthors());
+        if (dto.authorIds() != null) {
+            authors.forEach(author -> author.getBooks().remove(book));
+            authors = authorRepository.findAllById(dto.authorIds());
+            authors.forEach(author -> author.getBooks().add(book));
+            book.setAuthors(new HashSet<>(authors));
+        }
         book.setTitle(dto.title());
-        book.setAuthors(dto.authors());
         book.setPageCount(dto.pageCount());
         book.setReleaseDate(dto.releaseDate());
-
         Book savedBook = bookRepository.save(book);
-        BookDto bookDto = BookMapper.INSTANCE.bookToBookDto(savedBook);
         log.info("updated book {}", savedBook);
+        authorRepository.saveAll(authors);
+        BookDto bookDto = BookMapper.INSTANCE.bookToBookDto(savedBook);
 
         return bookDto;
     }

@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,18 +29,20 @@ public class AuthorServiceImpl implements AuthorService {
 
     // TODO: Exceptions for cases when book or author id is wrong
 
+    @Transactional
     @Override
     public Long addAuthor(AuthorDto authorDto) {
+        log.info("saving author {}", authorDto);
         Author author = AuthorMapper.INSTANCE.authorDtoToAuthor(authorDto);
-        List<Book> books = List.of();
+        List<Book> books = new ArrayList<>();
         if (authorDto.bookIds() != null) {
             books = bookRepository.findAllById(authorDto.bookIds());
             author.setBooks(new HashSet<>(books));
             books.forEach(book -> book.getAuthors().add(author));
         }
         Author saved = authorRepository.save(author);
-        bookRepository.saveAll(books);
         log.info("saved author: {}", saved);
+        bookRepository.saveAll(books);
 
         return saved.getAuthorId();
     }
@@ -90,6 +94,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorDtoPage;
     }
 
+    @Transactional
     @Override
     public AuthorDto updateAuthor(Long authorId, AuthorDto dto) {
         log.info("updating author with id {}", authorId);
@@ -98,13 +103,20 @@ public class AuthorServiceImpl implements AuthorService {
                     log.error("no author with id {}", authorId);
                     throw new RuntimeException("no such author");
                 });
+        List<Book> books = new ArrayList<>(author.getBooks());
+        if (dto.bookIds() != null) {
+            books.forEach(book -> book.getAuthors().remove(author));
+            books = bookRepository.findAllById(dto.bookIds());
+            books.forEach(book -> book.getAuthors().add(author));
+            author.setBooks(new HashSet<>(books));
+        }
         author.setName(dto.name());
         author.setLastName(dto.lastName());
         author.setBooks(dto.books());
-
         Author updatedAuthor = authorRepository.save(author);
+        log.info("updated author {}", updatedAuthor);
+        bookRepository.saveAll(books);
         AuthorDto authorDto = AuthorMapper.INSTANCE.authorToAuthorDto(updatedAuthor);
-        log.info("updated author {}", author);
 
         return authorDto;
     }
