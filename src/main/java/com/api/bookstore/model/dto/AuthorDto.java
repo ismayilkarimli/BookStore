@@ -4,6 +4,7 @@ import com.api.bookstore.model.bean.Book;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -22,5 +23,5 @@ public record AuthorDto(
         Set<Book> books,
 
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        List<Long> bookIds
+        List<@Min(1) Long> bookIds
 ) { }
