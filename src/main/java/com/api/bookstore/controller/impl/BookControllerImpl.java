@@ -61,6 +61,15 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookDtos);
     }
 
+    @GetMapping("/search/{year}")
+    @Override
+    public ResponseEntity<List<BookDto>> searchBooksBeforeOrAfterYear(@RequestParam(defaultValue = "before") String option,
+                                                                      @PathVariable Integer year) {
+        log.info("request to search books {} {}", option, year);
+        List<BookDto> books = bookService.searchBooksBeforeOrAfterYear(option, year);
+        return ResponseEntity.status(HttpStatus.OK).body(books);
+    }
+
     @PutMapping("/{id}")
     @Override
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
