@@ -24,6 +24,10 @@ public interface BookController {
 
     ResponseEntity<List<BookDto>> searchBooksByTitle(String title);
 
+    ResponseEntity<BookDto> searchBookByIsbn(String isbn);
+
+    ResponseEntity<List<BookDto>> searchBooksBeforeOrAfterYear(String option, Integer year);
+
     ResponseEntity<BookDto> updateBook(Long bookId, BookDto bookDto);
 
     ResponseEntity<HttpStatus> deleteBook(Long id);

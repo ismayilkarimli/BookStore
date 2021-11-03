@@ -13,6 +13,10 @@ public interface BookService {
 
     BookDto searchBookById(Long bookId);
 
+    BookDto searchBookByIsbn(String isbn);
+
+    List<BookDto> searchBooksBeforeOrAfterYear(String option, Integer year);
+
     List<BookDto> searchBooksByTitle(String title);
 
     Page<BookDto> getPaginatedBooks(Integer page);

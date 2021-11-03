@@ -27,6 +27,9 @@ public class Book {
     @Setter(AccessLevel.NONE)
     private Long bookId;
 
+    @Column(unique = true)
+    private String isbn;
+
     @Column(nullable = false)
     private String title;
 
