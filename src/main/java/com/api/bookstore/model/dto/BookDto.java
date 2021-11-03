@@ -27,5 +27,5 @@ public record BookDto(
         Set<Author> authors,
 
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        List<Long> authorIds
+        List<@Min(1) Long> authorIds
 ) { }
