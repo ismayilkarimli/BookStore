@@ -1,6 +1,7 @@
 package com.api.bookstore.service.impl;
 
 import com.api.bookstore.exception.IdException;
+import com.api.bookstore.exception.IsbnException;
 import com.api.bookstore.mapper.BookMapper;
 import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.bean.Book;
@@ -75,7 +76,7 @@ public class BookServiceImpl implements BookService {
         log.info("searching for book with isbn {}", isbn);
         Book book = bookRepository.findBookByIsbn(isbn).orElseThrow(() -> {
             log.error("no book with isbn {}", isbn);
-            throw new RuntimeException("no such book");
+            throw new IsbnException("no such book");
         });
         log.info("book with isbn {}: {}", isbn, book);
         return BookMapper.INSTANCE.bookToBookDto(book);
