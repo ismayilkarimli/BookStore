@@ -2,8 +2,11 @@ package com.api.bookstore.model.bean;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,6 +37,14 @@ public class Author {
     )
     @ToString.Exclude
     private Set<Book> books;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Date createdAt;
+
+    @Column(nullable = false)
+    @UpdateTimestamp
+    private Date updatedAt;
 
     @Override
     public boolean equals(Object o) {

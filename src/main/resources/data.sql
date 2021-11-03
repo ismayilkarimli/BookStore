@@ -1,13 +1,13 @@
-INSERT INTO Author( id, name, last_name ) values ( 10, 'Mark', 'Twain' );
-INSERT INTO Author( id, name, last_name ) values ( 20, 'Ray', 'Dalio' );
-INSERT INTO Author( id, name, last_name ) values ( 30, 'Leo', 'Tolstoy' );
-INSERT INTO Author( id, name, last_name ) values ( 40, 'Napoleon', 'Hill' );
-INSERT INTO Author( id, name, last_name ) values ( 50, 'Viktor', 'Frankl' );
-INSERT INTO Author( id, name, last_name ) values ( 60, 'Joshua', 'Bloch' );
-INSERT INTO Author( id, name, last_name ) values ( 70, 'Bert', 'Bates' );
-INSERT INTO Author( id, name, last_name ) values ( 80, 'Kathy', 'Sierra' );
-INSERT INTO Author( id, name, last_name ) values ( 90, 'Andy', 'Hunt' );
-INSERT INTO Author( id, name, last_name ) values ( 100, 'Dave', 'Thomas' );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 10, 'Mark', 'Twain', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 20, 'Ray', 'Dalio', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 30, 'Leo', 'Tolstoy', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 40, 'Napoleon', 'Hill', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 50, 'Viktor', 'Frankl', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 60, 'Joshua', 'Bloch', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 70, 'Bert', 'Bates', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 80, 'Kathy', 'Sierra', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 90, 'Andy', 'Hunt', NOW(), NOW() );
+INSERT INTO Author( id, name, last_name, created_at, updated_at ) values ( 100, 'Dave', 'Thomas', NOW(), NOW() );
 
 
 INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 10, '0-545-01022-1', 'Principles', NOW(), 592, NOW(), NOW() );
