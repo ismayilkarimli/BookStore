@@ -17,13 +17,13 @@ public record BookDto(
         @Isbn(message = "invalid isbn value")
         String isbn,
 
-        @NotBlank(message = "book title cannot be null")
+        @NotBlank(message = "book title cannot be blank")
         String title,
 
         @JsonFormat(pattern = "dd-MM-yyyy")
         LocalDate releaseDate,
 
-        @NotNull(message = "page count cannot be blank")
+        @NotNull(message = "page count cannot be null")
         @Positive(message = "page count must be positive")
         Integer pageCount,
 
