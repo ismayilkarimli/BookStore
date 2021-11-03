@@ -1,6 +1,7 @@
 package com.api.bookstore.exceptionhandler;
 
 import com.api.bookstore.exception.IdException;
+import com.api.bookstore.exception.IsbnException;
 import com.api.bookstore.model.error.ApiError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,16 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler({IdException.class})
-    public ResponseEntity<ApiError> handleResourceNotFound() {
+    public ResponseEntity<ApiError> handleIdException() {
         String errorTitle = "Resource with the entered ID does not exist";
+        ApiError error = new ApiError(errorTitle);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler({IsbnException.class})
+    public ResponseEntity<ApiError> handleIsbnException() {
+        String errorTitle = "No book matched the entered ISBN";
         ApiError error = new ApiError(errorTitle);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
