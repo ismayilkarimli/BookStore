@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -66,6 +68,25 @@ public class BookServiceImpl implements BookService {
         log.info("book {}", dto);
 
         return dto;
+    }
+
+    @Override
+    public List<BookDto> searchBooksBeforeOrAfterYear(String option, Integer year) {
+        List<Book> booksByRelease;
+        if (option.equals("before")) {
+            booksByRelease = bookRepository.findBooksByReleaseDateBefore(LocalDate.of(year, Month.DECEMBER, 31));
+            log.info("list of books before {}: {}", year, booksByRelease);
+        } else if (option.equals("after")) {
+            booksByRelease = bookRepository.findBooksByReleaseDateAfter(LocalDate.of(year, Month.DECEMBER, 31));
+            log.info("list of books after {}: {}", year, booksByRelease);
+        } else {
+            log.error("invalid option");
+            throw new IllegalArgumentException("no such option");
+        }
+
+        return booksByRelease.stream()
+                .map(BookMapper.INSTANCE::bookToBookDto)
+                .collect(Collectors.toList());
     }
 
     @Override
