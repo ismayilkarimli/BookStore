@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> {
                     log.error("no book with id {}", bookId);
-                    throw new IdException("no such book");
+                    throw new IdException("no book with id " + bookId);
                 });
         BookDto dto = BookMapper.INSTANCE.bookToBookDto(book);
         log.info("book {}", dto);
@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
         log.info("searching for book with isbn {}", isbn);
         Book book = bookRepository.findBookByIsbn(isbn).orElseThrow(() -> {
             log.error("no book with isbn {}", isbn);
-            throw new IsbnException("no such book");
+            throw new IsbnException("no book with isbn " + isbn);
         });
         log.info("book with isbn {}: {}", isbn, book);
         return BookMapper.INSTANCE.bookToBookDto(book);
@@ -93,7 +93,7 @@ public class BookServiceImpl implements BookService {
             log.info("list of books after {}: {}", year, booksByRelease);
         } else {
             log.error("invalid option");
-            throw new IllegalArgumentException("no such option");
+            throw new IllegalArgumentException("Invalid option" + option + ". Valid options are before and after");
         }
 
         return booksByRelease.stream()
@@ -127,7 +127,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> {
                     log.error("no book with id {}", bookId);
-                    throw new IdException("no such book");
+                    throw new IdException("no book with id " + bookId);
                 });
         List<Author> authors = new ArrayList<>(book.getAuthors());
         if (dto.authorIds() != null) {
@@ -152,7 +152,7 @@ public class BookServiceImpl implements BookService {
         log.info("deleting book with id {}", id);
         bookRepository.findById(id).orElseThrow(() -> {
             log.error("Could not delete. No book with id {}", id);
-            throw new IdException("no such book");
+            throw new IdException("no book with id " + id);
         });
         bookRepository.deleteById(id);
     }
