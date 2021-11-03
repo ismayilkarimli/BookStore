@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = IsbnValidator.class)
 public @interface Isbn {
 
-    String message() default "{com.api.bookstore.annotation.Isbn}";
+    String message() default "{com.api.bookstore.annotation.Isbn.message}";
 
     Class<?>[] groups() default {};
 
