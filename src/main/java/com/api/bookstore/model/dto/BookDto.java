@@ -17,7 +17,7 @@ public record BookDto(
         @Isbn(message = "invalid isbn value")
         String isbn,
 
-        @NotBlank(message = "book title cannot be blank")
+        @NotBlank(message = "book title cannot be null")
         String title,
 
         @JsonFormat(pattern = "dd-MM-yyyy")
