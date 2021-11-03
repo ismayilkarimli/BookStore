@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 public record BookDto(
+        @NotBlank(message = "book isbn must be present")
+        String isbn,
+
         @NotBlank(message = "book title cannot be blank")
         String title,
 

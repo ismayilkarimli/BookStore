@@ -35,14 +35,14 @@ public class BookControllerImpl implements BookController {
     @Override
     public ResponseEntity<List<BookDto>> getAllBooks() {
         log.info("request for getting all books");
-        return ResponseEntity.ok(bookService.getAllBooks());
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
     }
 
     @GetMapping("")
     @Override
     public ResponseEntity<Page<BookDto>> getPaginatedBooks(@RequestParam Integer page) {
         log.info("request to get books in paginated style (page {})", page);
-        return ResponseEntity.ok(bookService.getPaginatedBooks(page));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getPaginatedBooks(page));
     }
 
     @GetMapping("/{id}")
@@ -59,6 +59,14 @@ public class BookControllerImpl implements BookController {
         log.info("request to search books with title {}", title);
         List<BookDto> bookDtos = bookService.searchBooksByTitle(title);
         return ResponseEntity.status(HttpStatus.OK).body(bookDtos);
+    }
+
+    @GetMapping("/search/isbn/{isbn}")
+    @Override
+    public ResponseEntity<BookDto> searchBookByIsbn(@PathVariable String isbn) {
+        log.info("request to search for book with isbn {}", isbn);
+        BookDto bookDto = bookService.searchBookByIsbn(isbn);
+        return ResponseEntity.status(HttpStatus.OK).body(bookDto);
     }
 
     @GetMapping("/search/{year}")
