@@ -1,5 +1,6 @@
 package com.api.bookstore.model.dto;
 
+import com.api.bookstore.annotation.Isbn;
 import com.api.bookstore.model.bean.Author;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 public record BookDto(
         @NotBlank(message = "book isbn must be present")
+        @Isbn(message = "invalid isbn value")
         String isbn,
 
         @NotBlank(message = "book title cannot be blank")
@@ -21,7 +23,7 @@ public record BookDto(
         @JsonFormat(pattern = "dd-MM-yyyy")
         LocalDate releaseDate,
 
-        @NotBlank(message = "page count cannot be blank")
+        @NotNull(message = "page count cannot be null")
         @Positive(message = "page count must be positive")
         Integer pageCount,
 
