@@ -66,8 +66,18 @@ public class BookServiceImpl implements BookService {
                 });
         BookDto dto = BookMapper.INSTANCE.bookToBookDto(book);
         log.info("book {}", dto);
-
         return dto;
+    }
+
+    @Override
+    public BookDto searchBookByIsbn(String isbn) {
+        log.info("searching for book with isbn {}", isbn);
+        Book book = bookRepository.findBookByIsbn(isbn).orElseThrow(() -> {
+            log.error("no book with isbn {}", isbn);
+            throw new RuntimeException("no such book");
+        });
+        log.info("book with isbn {}: {}", isbn, book);
+        return BookMapper.INSTANCE.bookToBookDto(book);
     }
 
     @Override
