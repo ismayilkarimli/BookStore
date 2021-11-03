@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api/book")
 @RequiredArgsConstructor
 @Slf4j
 public class BookControllerImpl implements BookController {
