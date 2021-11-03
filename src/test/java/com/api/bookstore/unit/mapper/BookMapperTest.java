@@ -1,5 +1,6 @@
-package com.api.bookstore.mapper;
+package com.api.bookstore.unit.mapper;
 
+import com.api.bookstore.mapper.BookMapper;
 import com.api.bookstore.model.bean.Book;
 import com.api.bookstore.model.dto.BookDto;
 import org.junit.jupiter.api.Test;

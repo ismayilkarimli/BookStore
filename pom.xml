@@ -91,6 +91,7 @@
 				<configuration>
 					<source>1.17</source> <!-- depending on your project -->
 					<target>1.17</target> <!-- depending on your project -->
+					<release>17</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
