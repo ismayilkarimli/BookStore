@@ -22,6 +22,7 @@ public class BookMapperTest {
 
         // given
         Book book = new Book();
+        book.setIsbn("0-545-01022-5");
         book.setTitle("Pragmatic Programmer");
         book.setPageCount(320);
         book.setReleaseDate(date);
@@ -43,7 +44,7 @@ public class BookMapperTest {
         LocalDate date = LocalDate.parse("01-10-1999", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         // given
-        BookDto bookDto = new BookDto("Pragmatic Programmer", date, 320, Collections.emptySet(), List.of(1L));
+        BookDto bookDto = new BookDto("0-545-01022-5", "Pragmatic Programmer", date, 320, Collections.emptySet(), List.of(1L));
 
         // when
         Book book = BookMapper.INSTANCE.bookDtoToBook(bookDto);

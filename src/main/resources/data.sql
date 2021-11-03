@@ -10,16 +10,16 @@ INSERT INTO Author( id, name, last_name ) values ( 90, 'Andy', 'Hunt' );
 INSERT INTO Author( id, name, last_name ) values ( 100, 'Dave', 'Thomas' );
 
 
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 10, 'Principles', NOW(), 592, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 20, 'The Death of Ivan Ilyich', NOW(), 92, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 30, 'Think and Grow Rich', NOW(), 280, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 40, 'Mans Searh for Meaning', NOW(), 128, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 50, 'Head First: Java', NOW(), 420, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 60, 'Effective Java', NOW(), 328, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 70, 'Pragmatic Programmer', NOW(), 218, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 80, 'War and Peace', NOW(), 1001, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 90, 'Anna Karenina', NOW(), 492, NOW(), NOW() );
-INSERT INTO Book( id, title,release_date, page_count, created_at, updated_at ) values ( 100, 'The Adventures of Tom Sawyer', NOW(), 621, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 10, '0-545-01022-1', 'Principles', NOW(), 592, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 20, '0-545-01022-2', 'The Death of Ivan Ilyich', NOW(), 92, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 30, '0-545-01022-3', 'Think and Grow Rich', NOW(), 280, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 40, '0-545-01022-4', 'Mans Searh for Meaning', NOW(), 128, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 50, '0-545-01022-5', 'Head First: Java', NOW(), 420, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 60, '0-545-01022-6', 'Effective Java', NOW(), 328, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 70, '0-545-01022-7', 'Pragmatic Programmer', NOW(), 218, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 80, '0-545-01022-8', 'War and Peace', NOW(), 1001, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 90, '0-545-01022-9',  'Anna Karenina', NOW(), 492, NOW(), NOW() );
+INSERT INTO Book( id, isbn, title,release_date, page_count, created_at, updated_at ) values ( 100, '0-545-01022-0', 'The Adventures of Tom Sawyer', NOW(), 621, NOW(), NOW() );
 
 INSERT INTO Author_Book( author_id, book_id ) values ( 10, 100 );
 INSERT INTO Author_Book( author_id, book_id ) values ( 20, 10 );
