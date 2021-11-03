@@ -1,5 +1,6 @@
 package com.api.bookstore.service.impl;
 
+import com.api.bookstore.exception.IdException;
 import com.api.bookstore.mapper.BookMapper;
 import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.bean.Book;
@@ -60,7 +61,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> {
                     log.error("no book with id {}", bookId);
-                    throw new RuntimeException("no such book");
+                    throw new IdException("no such book");
                 });
         BookDto dto = BookMapper.INSTANCE.bookToBookDto(book);
         log.info("book {}", dto);
@@ -94,7 +95,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> {
                     log.error("no book with id {}", bookId);
-                    throw new RuntimeException("no such book");
+                    throw new IdException("no such book");
                 });
         List<Author> authors = new ArrayList<>(book.getAuthors());
         if (dto.authorIds() != null) {
@@ -119,7 +120,7 @@ public class BookServiceImpl implements BookService {
         log.info("deleting book with id {}", id);
         bookRepository.findById(id).orElseThrow(() -> {
             log.error("Could not delete. No book with id {}", id);
-            throw new RuntimeException("no such book");
+            throw new IdException("no such book");
         });
         bookRepository.deleteById(id);
     }

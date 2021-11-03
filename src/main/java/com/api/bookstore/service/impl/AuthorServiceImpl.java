@@ -1,5 +1,6 @@
 package com.api.bookstore.service.impl;
 
+import com.api.bookstore.exception.IdException;
 import com.api.bookstore.mapper.AuthorMapper;
 import com.api.bookstore.model.bean.Author;
 import com.api.bookstore.model.bean.Book;
@@ -64,7 +65,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> {
                     log.error("no author found with id {}", authorId);
-                    throw new RuntimeException("no such author");
+                    throw new IdException("no such author");
                 });
         log.info("found author {}", author);
         AuthorDto authorDto = AuthorMapper.INSTANCE.authorToAuthorDto(author);
@@ -101,7 +102,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> {
                     log.error("no author with id {}", authorId);
-                    throw new RuntimeException("no such author");
+                    throw new IdException("no such author");
                 });
         List<Book> books = new ArrayList<>(author.getBooks());
         if (dto.bookIds() != null) {
@@ -127,7 +128,7 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("no author with id {}", id);
-                    throw new RuntimeException("no such author");
+                    throw new IdException("no such author");
                 });
         authorRepository.deleteById(id);
     }
