@@ -42,7 +42,7 @@ public class BookTests {
 
     @Test
     @DisplayName("POST /book. Expected 201")
-    public void givenAddBookURI_whenValidJson_thenCreated() throws Exception {
+    public void givenPostBookURI_whenValidJson_thenCreated() throws Exception {
         var book = Map.of(
                 "isbn", "01344-39023",
                 "title", "Rich Dad Poor Dad",
@@ -97,7 +97,7 @@ public class BookTests {
 
     @Test
     @DisplayName("PUT /book/{id}. Expected 200")
-    public void whenUpdateBookURI_validJson_thenOk() throws Exception {
+    public void whenPutBookURI_validJson_thenOk() throws Exception {
         long id = 1L;
         var book = Map.of(
                 "isbn", "01344-39023",
@@ -116,7 +116,7 @@ public class BookTests {
 
     @Test
     @DisplayName("PUT /book/{id}. Expected 400")
-    public void whenUpdateBookURI_invalidJson_thenBadRequest() throws Exception {
+    public void whenPutBookURI_invalidJson_thenBadRequest() throws Exception {
         long id = 1L;
         var book = Map.of(
                 "isbn", "01344-39023",
