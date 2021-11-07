@@ -51,7 +51,7 @@ public class BookTests {
         );
         var requestBody = new ObjectMapper().writeValueAsString(book);
 
-        mockMvc.perform(post("/book")
+        mockMvc.perform(post("/api/book")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isCreated())
@@ -69,7 +69,7 @@ public class BookTests {
         ); // missing title property
         String requestBody = new ObjectMapper().writeValueAsString(book);
 
-        mockMvc.perform(post("/book")
+        mockMvc.perform(post("/api/book")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -82,7 +82,7 @@ public class BookTests {
     public void whenGetBookURI_validPathVariable_thenOk() throws Exception {
         long id = 1L;
 
-        mockMvc.perform(get("/book/" + id))
+        mockMvc.perform(get("/api/book/" + id))
                 .andExpect(status().isOk())
                 .andReturn();
     }
@@ -90,7 +90,7 @@ public class BookTests {
     @Test
     @DisplayName("GET /book/{id}. Expected 400")
     public void whenGetBookURI_invalidPathVariable_thenBadRequest() throws Exception {
-        mockMvc.perform(get("/book/" + "badId"))
+        mockMvc.perform(get("/api/book/" + "badId"))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
@@ -107,7 +107,7 @@ public class BookTests {
         );
         String requestBody = new ObjectMapper().writeValueAsString(book);
 
-        mockMvc.perform(put("/book/" + id)
+        mockMvc.perform(put("/api/book/" + id)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ public class BookTests {
         ); // missing title property
         String requestBody = new ObjectMapper().writeValueAsString(book);
 
-        mockMvc.perform(put("/book/" + id)
+        mockMvc.perform(put("/api/book/" + id)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -139,7 +139,7 @@ public class BookTests {
     public void givenDeleteBookURI_validPathVariable_thenNoContent() throws Exception {
         long id = 1L;
 
-        mockMvc.perform(delete("/book/" + id))
+        mockMvc.perform(delete("/api/book/" + id))
                 .andExpect(status().isNoContent())
                 .andReturn();
     }
@@ -147,7 +147,7 @@ public class BookTests {
     @Test
     @DisplayName("DELETE /book/{id}. Expect 400")
     public void givenDeleteBookURI_invalidPathVariable_thenBadRequest() throws Exception {
-        mockMvc.perform(delete("/book/" + "badId"))
+        mockMvc.perform(delete("/api/book/" + "badId"))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
