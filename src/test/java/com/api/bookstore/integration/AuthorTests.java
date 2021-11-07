@@ -47,7 +47,7 @@ public class AuthorTests {
     public void givenPostAuthorURI_whenValidJson_thenCreated() throws Exception {
         var author = Map.of(
                 "name", "Ray",
-                "lastname", "Dalio"
+                "lastName", "Dalio"
         );
         var requestBody = new ObjectMapper().writeValueAsString(author);
 
@@ -63,7 +63,7 @@ public class AuthorTests {
     @DisplayName("POST /author. Expected 400")
     public void givenPostAuthorURI_whenInvalidJson_thenValidationErrorAndBadRequest() throws Exception {
         var author = Map.of(
-                "lastname", "Dalio"
+                "lastName", "Dalio"
         ); // missing name
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
@@ -99,7 +99,7 @@ public class AuthorTests {
         long id = 1L;
         var author = Map.of(
                 "name", "Ray",
-                "lastname", "Dalio"
+                "lastName", "Dalio"
         );
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
@@ -115,7 +115,7 @@ public class AuthorTests {
     public void whenPutAuthorURI_invalidJson_thenBadRequest() throws Exception {
         long id = 1L;
         var author = Map.of(
-                "lastname", "Dalio"
+                "lastName", "Dalio"
         ); // missing name property
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
