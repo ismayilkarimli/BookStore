@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class BookControllerImpl implements BookController {
     private final BookService bookService;
 
     @Override
-    @PostMapping("")
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "add a new book",
             notes = "Entered BookDto must meet the validation requirements.",
@@ -47,7 +48,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "get all books",
             consumes = "application/json",
@@ -60,7 +61,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "get paginated books",
             notes = "page parameter must be an integer.",
@@ -77,7 +78,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "search book by id",
             notes = """
@@ -98,7 +99,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "search book(s) by title",
             consumes = "application/json",
@@ -115,7 +116,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/search/isbn/{isbn}")
+    @GetMapping(value = "/search/isbn/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "search book by isbn",
             notes = """
@@ -136,7 +137,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/search/{year}")
+    @GetMapping(value = "/search/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "search book(s) by title",
             notes = "year must be of type integer.",
@@ -156,7 +157,7 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "update book using an id",
             notes = "id must exist and of type Long. BookDto must meet the validation constraints.",
@@ -174,9 +175,9 @@ public class BookControllerImpl implements BookController {
         BookDto updatedBook = bookService.updateBook(bookId, bookDto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
     }
-
+  
     @Override
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "delete book by id",
             notes = "id must exist and of type Long.",

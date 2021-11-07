@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,8 @@ public class AuthorControllerImpl implements AuthorController {
 
     private final AuthorService authorService;
 
-
-    @PostMapping("")
+    @Override
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "add a new author",
             notes = "adds a new author with the supplied AuthorDto",
@@ -47,7 +48,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "get all authors",
             notes = "gets all authors in the database in a list format",
@@ -62,7 +63,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "get paginated authors",
             notes = "returns authors in page",
@@ -81,7 +82,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "get author by the specified id",
             notes = """
@@ -102,7 +103,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "search for author(s) by name",
             notes = "returns list of authors corresponding to the entered name.",
@@ -120,7 +121,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "update for author by id",
             notes = "id must exist in the database. AuthorDto must meet the validation constraints.",
@@ -140,7 +141,7 @@ public class AuthorControllerImpl implements AuthorController {
     }
 
     @Override
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(
             value = "delete author by id",
             notes = "id must exist in the database.",
