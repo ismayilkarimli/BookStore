@@ -6,6 +6,8 @@ import com.api.bookstore.model.dto.BookDto;
 import com.api.bookstore.service.BookService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Page of 5 books"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing BookDto body")
+    })
     public ResponseEntity<Map<String, Long>> addBook(@Valid @RequestBody BookDto bookDto) {
         log.info("request for adding book {}", bookDto);
         Long id = bookService.addBook(bookDto);
@@ -47,6 +53,7 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponse(responseCode = "200", description = "List of books")
     public ResponseEntity<List<BookDto>> getAllBooks() {
         log.info("request for getting all books");
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
@@ -60,6 +67,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Page of 5 books"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing page parameter")
+    })
     public ResponseEntity<Page<BookDto>> getPaginatedBooks(@ApiParam(value = "page to retrieve (starts from 0)", required = true) @RequestParam(defaultValue = "0") Integer page) {
         log.info("request to get books in paginated style (page {})", page);
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getPaginatedBooks(page));
@@ -76,6 +87,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Found book"),
+            @ApiResponse(responseCode = "404", description = "Invalid Id"),
+    })
     public ResponseEntity<BookDto> searchBookById(@PathVariable Long id) {
         log.info("request to search book with id {}", id);
         BookDto bookDto = bookService.searchBookById(id);
@@ -89,6 +104,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Found book(s)"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing title paramater")
+    })
     public ResponseEntity<List<BookDto>> searchBooksByTitle(@RequestParam String title) {
         log.info("request to search books with title {}", title);
         List<BookDto> bookDtos = bookService.searchBooksByTitle(title);
@@ -106,6 +125,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Found book"),
+            @ApiResponse(responseCode = "404", description = "Invalid isbn"),
+    })
     public ResponseEntity<BookDto> searchBookByIsbn(@PathVariable String isbn) {
         log.info("request to search for book with isbn {}", isbn);
         BookDto bookDto = bookService.searchBookByIsbn(isbn);
@@ -120,6 +143,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Book list"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing option")
+    })
     public ResponseEntity<List<BookDto>> searchBooksBeforeOrAfterYear(@ApiParam("parameter to specify whether to return books before or after the entered year")
                                                                           @RequestParam(defaultValue = "before") String option,
                                                                       @PathVariable Integer year) {
@@ -136,6 +163,11 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "updated book"),
+            @ApiResponse(responseCode = "404", description = "Invalid Id"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing BookDto")
+    })
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
                                                  @Valid @RequestBody BookDto bookDto) {
         log.info("request to update book with id {}", bookId);
@@ -151,6 +183,10 @@ public class BookControllerImpl implements BookController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Deleted book"),
+            @ApiResponse(responseCode = "404", description = "Invalid Id"),
+    })
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable Long id) {
         log.info("request to delete book with id {}", id);
         bookService.deleteBook(id);

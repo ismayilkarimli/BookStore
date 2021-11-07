@@ -5,6 +5,8 @@ import com.api.bookstore.model.dto.AuthorDto;
 import com.api.bookstore.service.AuthorService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,10 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Author created"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
     public ResponseEntity<Map<String, Long>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         log.info("request for adding author {}", authorDto);
         Long id = authorService.addAuthor(authorDto);
@@ -48,6 +54,7 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
         log.info("request to get all authors");
         List<AuthorDto> allAuthors = authorService.getAllAuthors();
@@ -62,6 +69,10 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Page of 5 authors"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing page parameter")
+    })
     public ResponseEntity<Page<AuthorDto>> getPaginatedAuthors(@ApiParam(value = "page to retrieve (starts from 0)", required = true)
                                                                    @RequestParam(defaultValue = "0") Integer page) {
         log.info("request to get authors in paginated style (page {})", page);
@@ -80,6 +91,10 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Found author"),
+            @ApiResponse(responseCode = "404", description = "Invalid Id"),
+    })
     public ResponseEntity<AuthorDto> searchAuthorById(@PathVariable("id") Long authorId) {
         log.info("request to search author with id {}", authorId);
         AuthorDto authorDto = authorService.searchAuthorById(authorId);
@@ -94,6 +109,10 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of authors corresponding to entered name"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing name parameter")
+    })
     public ResponseEntity<List<AuthorDto>> searchAuthorsByName(@RequestParam("name") String name) {
         log.info("request to search author with name {}", name);
         List<AuthorDto> authorDtos = authorService.searchAuthorsByName(name);
@@ -108,6 +127,11 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Updated author"),
+            @ApiResponse(responseCode = "404", description = "Invalid Id"),
+            @ApiResponse(responseCode = "400", description = "Bad request on invalid/missing AuthorDto parameter")
+    })
     public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") Long authorId,
                                                   @Valid @RequestBody AuthorDto authorDto) {
         log.info("put request for updating author with id {}", authorId);
@@ -123,6 +147,10 @@ public class AuthorControllerImpl implements AuthorController {
             consumes = "application/json",
             produces = "application/json"
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Deleted author"),
+            @ApiResponse(responseCode = "404", description = "Invalid id")
+    })
     public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable("id") Long authorId) {
         log.info("request to delete author with id {}", authorId);
         authorService.deleteAuthor(authorId);
