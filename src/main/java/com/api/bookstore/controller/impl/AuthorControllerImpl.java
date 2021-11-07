@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class AuthorControllerImpl implements AuthorController {
 
     private final AuthorService authorService;
 
-    @PostMapping("")
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Map<String, Long>> addAuthor(@Valid @RequestBody AuthorDto authorDto) {
         log.info("request for adding author {}", authorDto);
@@ -32,7 +33,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("id", id));
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
         log.info("request to get all authors");
@@ -40,7 +41,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.ok(allAuthors);
     }
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Page<AuthorDto>> getPaginatedAuthors(@RequestParam Integer page) {
         log.info("request to get authors in paginated style (page {})", page);
@@ -48,7 +49,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.ok(paginatedAuthors);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<AuthorDto> searchAuthorById(@PathVariable("id") Long authorId) {
         log.info("request to search author with id {}", authorId);
@@ -56,7 +57,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.status(HttpStatus.OK).body(authorDto);
     }
 
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<List<AuthorDto>> searchAuthorsByName(@RequestParam("name") String name) {
         log.info("request to search author with name {}", name);
@@ -64,7 +65,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.status(HttpStatus.OK).body(authorDtos);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("id") Long authorId,
                                                   @Valid @RequestBody AuthorDto authorDto) {
@@ -73,7 +74,7 @@ public class AuthorControllerImpl implements AuthorController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedAuthor);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable("id") Long authorId) {
         log.info("request to delete author with id {}", authorId);
