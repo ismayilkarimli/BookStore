@@ -51,7 +51,7 @@ public class AuthorTests {
         );
         var requestBody = new ObjectMapper().writeValueAsString(author);
 
-        mockMvc.perform(post("/author")
+        mockMvc.perform(post("/api/author")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isCreated())
@@ -67,7 +67,7 @@ public class AuthorTests {
         ); // missing name
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
-        mockMvc.perform(post("/author")
+        mockMvc.perform(post("/api/author")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -80,7 +80,7 @@ public class AuthorTests {
     public void whenGetAuthorURI_validPathVariable_thenOk() throws Exception {
         long id = 1L;
 
-        mockMvc.perform(get("/author/" + id))
+        mockMvc.perform(get("/api/author/" + id))
                 .andExpect(status().isOk())
                 .andReturn();
     }
@@ -88,7 +88,7 @@ public class AuthorTests {
     @Test
     @DisplayName("GET /author/{id}. Expected 400")
     public void whenGetAuthorURI_invalidPathVariable_thenBadRequest() throws Exception {
-        mockMvc.perform(get("/author/" + "badId"))
+        mockMvc.perform(get("/api/author/" + "badId"))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
@@ -103,7 +103,7 @@ public class AuthorTests {
         );
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
-        mockMvc.perform(put("/author/" + id)
+        mockMvc.perform(put("/api/author/" + id)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isOk())
@@ -119,7 +119,7 @@ public class AuthorTests {
         ); // missing name property
         String requestBody = new ObjectMapper().writeValueAsString(author);
 
-        mockMvc.perform(put("/author/" + id)
+        mockMvc.perform(put("/api/author/" + id)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -133,7 +133,7 @@ public class AuthorTests {
     public void givenDeleteAuthorURI_validPathVariable_thenNoContent() throws Exception {
         long id = 1L;
 
-        mockMvc.perform(delete("/author/" + id))
+        mockMvc.perform(delete("/api/author/" + id))
                 .andExpect(status().isNoContent())
                 .andReturn();
     }
@@ -141,7 +141,7 @@ public class AuthorTests {
     @Test
     @DisplayName("DELETE /author/{id}. Expect 400")
     public void givenDeleteAuthorURI_invalidPathVariable_thenBadRequest() throws Exception {
-        mockMvc.perform(delete("/author/" + "badId"))
+        mockMvc.perform(delete("/api/author/" + "badId"))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
