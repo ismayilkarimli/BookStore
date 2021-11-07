@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
 
-    @PostMapping("")
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Map<String, Long>> addBook(@Valid @RequestBody BookDto bookDto) {
         log.info("request for adding book {}", bookDto);
@@ -31,21 +32,21 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("id", id));
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<List<BookDto>> getAllBooks() {
         log.info("request for getting all books");
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
     }
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Page<BookDto>> getPaginatedBooks(@RequestParam Integer page) {
         log.info("request to get books in paginated style (page {})", page);
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getPaginatedBooks(page));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<BookDto> searchBookById(@PathVariable Long id) {
         log.info("request to search book with id {}", id);
@@ -53,7 +54,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookDto);
     }
 
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<List<BookDto>> searchBooksByTitle(@RequestParam String title) {
         log.info("request to search books with title {}", title);
@@ -61,7 +62,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookDtos);
     }
 
-    @GetMapping("/search/isbn/{isbn}")
+    @GetMapping(value = "/search/isbn/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<BookDto> searchBookByIsbn(@PathVariable String isbn) {
         log.info("request to search for book with isbn {}", isbn);
@@ -69,7 +70,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookDto);
     }
 
-    @GetMapping("/search/{year}")
+    @GetMapping(value = "/search/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<List<BookDto>> searchBooksBeforeOrAfterYear(@RequestParam(defaultValue = "before") String option,
                                                                       @PathVariable Integer year) {
@@ -78,7 +79,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(books);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
                                                  @Valid @RequestBody BookDto bookDto) {
@@ -87,7 +88,7 @@ public class BookControllerImpl implements BookController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable Long id) {
         log.info("request to delete book with id {}", id);
