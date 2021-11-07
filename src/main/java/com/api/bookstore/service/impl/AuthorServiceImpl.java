@@ -28,8 +28,6 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
 
-    // TODO: Exceptions for cases when book or author id is wrong
-
     @Transactional
     @Override
     public Long addAuthor(AuthorDto authorDto) {
