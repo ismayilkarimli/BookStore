@@ -1,0 +1,26 @@
+version: '2'
+services:
+  app:
+    image: 'bookstore:latest'
+    build:
+      context: .
+    container_name: bookstore
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgresdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/bookstore
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+
+  postgresdb:
+    image: 'postgres:latest'
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=bookstore
